@@ -1,0 +1,100 @@
+run:
+  timeout: 5m
+  issues-exit-code: 1
+  tests: true
+  modules-download-mode: readonly
+  allow-parallel-runners: false
+
+output:
+  formats:
+    - format: colored-line-number
+      path: stdout
+  show-stats: true
+
+linters:
+  enable:
+    - goimports
+    - goconst
+    - misspell
+    - errcheck
+    - gosimple
+    - govet
+    - ineffassign
+    - staticcheck
+    - unused
+    - revive
+    - asasalint
+    - asciicheck
+    - bodyclose
+    - contextcheck
+    - errname
+    - errorlint
+    - exportloopref
+    - gocritic
+    - godot
+    - gomoddirectives
+    - gosec
+    - nakedret
+    - nilerr
+    - nilnil
+    - noctx
+    - nolintlint
+    - prealloc
+    - predeclared
+    - promlinter
+    - reassign
+    - rowserrcheck
+    - sqlclosecheck
+    - tenv
+    - testableexamples
+    - thelper
+    - tparallel
+    - unconvert
+    - unparam
+    - usestdlibvars
+    - wastedassign
+
+linters-settings:
+  goconst:
+    min-len: 2
+    min-occurrences: 2
+    ignore-tests: true
+  goimports:
+    local-prefixes: github.com/lsytj0413/golang-project-template
+  revive:
+    enable-all-rules: true
+    rules:
+      - name: line-length-limit
+        severity: warning
+        disabled: false
+        arguments:
+          - 120
+      - name: add-constant
+        severity: warning
+        disabled: false
+        arguments:
+          - maxLitCount: "3"
+            allowStrs: '""'
+            allowInts: '0,1,2,3,4,5,6,7,8,9,10,16,32,64,100,128,1000,1024,0644,0755,0600'
+            allowFloats: "0.0,0.,0.5,0.50,0.95,0.99,0.999,1.0,1.,2.0,2.,80.0,100.0"
+            ignoreFuncs: 'slog\.*,fmt\.*'
+      - name: unhandled-error
+        severity: warning
+        disabled: false
+        arguments:
+          - "fmt.Printf"
+
+issues:
+  exclude-use-default: true
+  exclude-rules:
+    - path: _test.go
+      linters:
+        - errcheck
+  fix: true
+  max-same-issues: 3
+  max-issues-per-linter: 50
+  include:
+    - "EXC0012"
+    - "EXC0014"
+  exclude-dirs:
+    - "example"
