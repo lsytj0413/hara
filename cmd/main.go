@@ -30,9 +30,9 @@ import (
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials/insecure"
 
-	"github.com/lsytj0413/golang-project-template/pb"
-	"github.com/lsytj0413/golang-project-template/pkg/server"
-	"github.com/lsytj0413/golang-project-template/pkg/utils/version"
+	"github.com/lsytj0413/hara/pb"
+	"github.com/lsytj0413/hara/pkg/server"
+	"github.com/lsytj0413/hara/pkg/utils/version"
 )
 
 // curl -v -H "Request-ID: 123" http://127.0.0.1:8081/v1/hello -d '{"Name": "lsytj0413"}'

@@ -60,7 +60,7 @@ linters-settings:
     min-occurrences: 2
     ignore-tests: true
   goimports:
-    local-prefixes: github.com/lsytj0413/golang-project-template
+    local-prefixes: github.com/lsytj0413/hara
   revive:
     enable-all-rules: true
     rules:
