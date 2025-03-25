@@ -3,48 +3,31 @@
 
 ## Table of Contents
 
-- [api.proto](#api-proto)
-    - [HelloRequest](#pb-HelloRequest)
-    - [HelloResponse](#pb-HelloResponse)
-  
-    - [HelloService](#pb-HelloService)
+- [wal.proto](#wal-proto)
+    - [Record](#pb-Record)
   
 - [Scalar Value Types](#scalar-value-types)
 
 
 
-<a name="api-proto"></a>
+<a name="wal-proto"></a>
 <p align="right"><a href="#top">Top</a></p>
 
-## api.proto
+## wal.proto
 
 
 
-<a name="pb-HelloRequest"></a>
+<a name="pb-Record"></a>
 
-### HelloRequest
-
-
-
-| Field | Type | Label | Description |
-| ----- | ---- | ----- | ----------- |
-| name | [string](#string) |  | name is the user&#39;s name which send this request. |
-
-
-
-
-
-
-<a name="pb-HelloResponse"></a>
-
-### HelloResponse
+### Record
 
 
 
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
-| message | [string](#string) |  | message is the text responsd. |
-| current_time | [google.protobuf.Timestamp](#google-protobuf-Timestamp) |  | current_time is the timestamp which message generated. |
+| pre_crc | [uint32](#uint32) |  |  |
+| crc | [uint32](#uint32) |  |  |
+| data | [bytes](#bytes) |  |  |
 
 
 
@@ -55,16 +38,6 @@
  
 
  
-
-
-<a name="pb-HelloService"></a>
-
-### HelloService
-
-
-| Method Name | Request Type | Response Type | Description |
-| ----------- | ------------ | ------------- | ------------|
-| Hello | [HelloRequest](#pb-HelloRequest) | [HelloResponse](#pb-HelloResponse) |  |
 
  
 
