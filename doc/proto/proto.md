@@ -4,6 +4,7 @@
 ## Table of Contents
 
 - [wal.proto](#wal-proto)
+    - [Entry](#pb-Entry)
     - [Record](#pb-Record)
   
 - [Scalar Value Types](#scalar-value-types)
@@ -17,6 +18,23 @@
 
 
 
+<a name="pb-Entry"></a>
+
+### Entry
+
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| term | [uint64](#uint64) |  |  |
+| offset | [uint64](#uint64) |  |  |
+| data | [bytes](#bytes) |  |  |
+
+
+
+
+
+
 <a name="pb-Record"></a>
 
 ### Record
@@ -25,7 +43,7 @@
 
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
-| pre_crc | [uint32](#uint32) |  |  |
+| type | [uint32](#uint32) |  |  |
 | crc | [uint32](#uint32) |  |  |
 | data | [bytes](#bytes) |  |  |
 
