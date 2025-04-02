@@ -3,6 +3,8 @@ package hara
 import (
 	"sync"
 	"testing"
+
+	"github.com/lsytj0413/hara/pb"
 )
 
 func Benchmark_mutex(b *testing.B) {
@@ -46,4 +48,35 @@ func Benchmark_chan(b *testing.B) {
 	})
 	close(ch)
 	wg.Wait()
+}
+
+func TestWal(t *testing.T) {
+	wal, err := NewWal("/tmp")
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	for i := 0; i < 1000; i++ {
+		err = wal.Append(nil, &pb.Entry{
+			Data: []byte("hello world"),
+		})
+		if err != nil {
+			t.Fatal(err)
+		}
+	}
+
+	err = wal.Sync(nil)
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	err = wal.Truncate(nil, 0)
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	err = wal.Close()
+	if err != nil {
+		t.Fatal(err)
+	}
 }
