@@ -93,12 +93,9 @@ export GOFLAGS ?= -count=1
 build: build-local
 
 # more info about `GOGC` env: https://github.com/golangci/golangci-lint#memory-usage-of-golangci-lint
-lint: $(GOLANGCI_LINT)
+lint:
 	@$(GOLANGCI_LINT) --version
 	@$(GOLANGCI_LINT) run --verbose
-
-$(GOLANGCI_LINT):
-	curl -sfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh -s -- -b $(BIN_DIR) v1.57.2
 
 test:
 	# 1. Now we can use -race flag, the 'nosplit stack overflow' error will not happened at >= go1.20

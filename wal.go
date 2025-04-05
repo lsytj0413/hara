@@ -2,9 +2,11 @@ package hara
 
 import (
 	"context"
+	"fmt"
 	"io"
 	"os"
 	"path"
+	"sync"
 
 	"google.golang.org/protobuf/proto"
 
@@ -31,13 +33,17 @@ func NewWal(dir string) (Wal, error) {
 }
 
 type wal struct {
+	mu  sync.Mutex
 	dir string
 	f   *os.File
 }
 
 func (w *wal) Append(ctx context.Context, entry *pb.Entry) error {
+	w.mu.Lock()
+	defer w.mu.Unlock()
+
 	if w.f == nil {
-		f, err := os.OpenFile(path.Join(w.dir, "0.wal"), os.O_RDWR|os.O_CREATE|os.O_APPEND, 0644)
+		f, err := os.OpenFile(path.Join(w.dir, fmt.Sprintf("%d.wal", entry.Offset)), os.O_RDWR|os.O_CREATE|os.O_APPEND, 0644)
 		if err != nil {
 			return err
 		}
@@ -64,6 +70,21 @@ func (w *wal) Append(ctx context.Context, entry *pb.Entry) error {
 		return err
 	}
 
+	err = w.f.Sync()
+	if err != nil {
+		return err
+	}
+
+	curOff, err := w.f.Seek(0, io.SeekCurrent)
+	if err != nil {
+		return err
+	}
+
+	if curOff < 1024 {
+		return nil
+	}
+
+	w.f = nil
 	return nil
 }
 

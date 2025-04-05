@@ -58,7 +58,8 @@ func TestWal(t *testing.T) {
 
 	for i := 0; i < 1000; i++ {
 		err = wal.Append(nil, &pb.Entry{
-			Data: []byte("hello world"),
+			Offset: uint64(i),
+			Data:   []byte("hello world"),
 		})
 		if err != nil {
 			t.Fatal(err)
