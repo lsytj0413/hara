@@ -1,10 +1,10 @@
-package hara
+package hara_test
 
 import (
 	"sync"
 	"testing"
 
-	"github.com/lsytj0413/hara/pb"
+	"github.com/lsytj0413/hara"
 )
 
 func Benchmark_mutex(b *testing.B) {
@@ -51,13 +51,13 @@ func Benchmark_chan(b *testing.B) {
 }
 
 func TestWal(t *testing.T) {
-	wal, err := NewWal("/tmp")
+	wal, err := hara.NewWal("/tmp")
 	if err != nil {
 		t.Fatal(err)
 	}
 
 	for i := 0; i < 1000; i++ {
-		err = wal.Append(nil, &pb.Entry{
+		err = wal.Append(nil, &hara.Entry{
 			Offset: uint64(i),
 			Data:   []byte("hello world"),
 		})

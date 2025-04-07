@@ -8,14 +8,17 @@ import (
 
 	"google.golang.org/protobuf/proto"
 
-	"github.com/lsytj0413/hara/pb"
+	v1 "github.com/lsytj0413/hara/pb/wal/v1"
 )
+
+type Entry = v1.Entry
+type walRecord = v1.Record
 
 // Wal is Write a Go interface for a write-ahead log (WAL) that supports concurrent reads and writes.
 type Wal interface {
 	io.Closer
 
-	Append(ctx context.Context, entry *pb.Entry) error
+	Append(ctx context.Context, entry *Entry) error
 
 	Sync(ctx context.Context) error
 
@@ -39,7 +42,7 @@ type wal struct {
 	fp  *filePipeline
 }
 
-func (w *wal) Append(ctx context.Context, entry *pb.Entry) error {
+func (w *wal) Append(ctx context.Context, entry *Entry) error {
 	w.mu.Lock()
 	defer w.mu.Unlock()
 
@@ -57,7 +60,7 @@ func (w *wal) Append(ctx context.Context, entry *pb.Entry) error {
 		return err
 	}
 
-	record := &pb.Record{
+	record := &walRecord{
 		Type: 0,
 		Data: data,
 	}

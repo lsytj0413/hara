@@ -1,11 +1,8 @@
 syntax = "proto3";
 
-package pb;
+package wal.v1;
 
-import "google/api/annotations.proto";
-import "google/protobuf/timestamp.proto";
-
-option go_package = "./;pb";
+option go_package = "./;v1";
 
 message Record {
   uint32 type = 1;

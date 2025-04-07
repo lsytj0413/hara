@@ -149,9 +149,10 @@ PROTOCGO := $(BIN_DIR)/protoc-gen-go
 PROTOCGRPC := $(BIN_DIR)/protoc-gen-go-grpc
 PROTOCGATEWAY := $(BIN_DIR)/protoc-gen-grpc-gateway
 .PHONY: proto
-proto: $(PROTOCGO) $(PROTOCGRPC) $(PROTOCGATEWAY)
+proto: $(PROTOCGO) $(PROTOCGRPC) $(PROTOCGATEWAY) $(PROTODOC)
 	@rm -rf ./pb
-	@./proto/generate.sh
+	# @./proto/generate.sh
+	buf generate
 
 $(PROTOCGO):
 	go install -v google.golang.org/protobuf/cmd/protoc-gen-go@v1.30.0
@@ -164,19 +165,21 @@ $(PROTOCGATEWAY):
 	go install -v github.com/grpc-ecosystem/grpc-gateway/v2/protoc-gen-openapiv2@v2.15.2
 
 proto-clean:
-	rm -rf ./pb
+	rm -rf ./pb ./doc/wal.md
 
 proto-format:
 	# At macos, you can install clang-format with: brew install clang-format
-	clang-format -i --style=Google proto/*.proto
+	# clang-format -i --style=Google proto/*.proto
+	buf format -w
 
 PROTOLINT := $(BIN_DIR)/protoc-gen-protolint
 proto-lint: $(PROTOLINT)
-	protoc --proto_path ./proto \
-		--protolint_out . \
-		--protolint_opt config_dir_path=. \
-		--protolint_opt proto_root=./proto \
-		proto/*.proto
+	# protoc --proto_path ./proto \
+	# 	--protolint_out . \
+	# 	--protolint_opt config_dir_path=. \
+	# 	--protolint_opt proto_root=./proto \
+	# 	proto/*.proto
+	buf lint
 
 $(PROTOLINT):
 	go install -v github.com/yoheimuta/protolint/cmd/protoc-gen-protolint@v0.47.4
@@ -186,7 +189,7 @@ proto-doc: $(PROTODOC)
 	protoc --doc_out=doc/proto \
 		-I ./proto \
 		--doc_opt=markdown,proto.md \
-		proto/*.proto
+		proto/wal/v1/*.proto
 
 $(PROTODOC):
 	go install -v github.com/pseudomuto/protoc-gen-doc/cmd/protoc-gen-doc@v1.5.1

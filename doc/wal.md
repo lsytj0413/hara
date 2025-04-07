@@ -3,22 +3,22 @@
 
 ## Table of Contents
 
-- [wal.proto](#wal-proto)
-    - [Entry](#pb-Entry)
-    - [Record](#pb-Record)
+- [wal/v1/wal.proto](#wal_v1_wal-proto)
+    - [Entry](#wal-v1-Entry)
+    - [Record](#wal-v1-Record)
   
 - [Scalar Value Types](#scalar-value-types)
 
 
 
-<a name="wal-proto"></a>
+<a name="wal_v1_wal-proto"></a>
 <p align="right"><a href="#top">Top</a></p>
 
-## wal.proto
+## wal/v1/wal.proto
 
 
 
-<a name="pb-Entry"></a>
+<a name="wal-v1-Entry"></a>
 
 ### Entry
 
@@ -35,7 +35,7 @@
 
 
 
-<a name="pb-Record"></a>
+<a name="wal-v1-Record"></a>
 
 ### Record
 
