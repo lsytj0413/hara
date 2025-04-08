@@ -8,11 +8,11 @@ import (
 
 	"google.golang.org/protobuf/proto"
 
-	v1 "github.com/lsytj0413/hara/pb/wal/v1"
+	walv1 "github.com/lsytj0413/hara/pb/wal/v1"
 )
 
-type Entry = v1.Entry
-type walRecord = v1.Record
+type Entry = walv1.Entry
+type walRecord = walv1.Record
 
 // Wal is Write a Go interface for a write-ahead log (WAL) that supports concurrent reads and writes.
 type Wal interface {
